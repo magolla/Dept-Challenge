@@ -9,5 +9,14 @@
         android:id="@+id/splashFragment"
         android:name="com.facundocetraro.deptchallenge.ui.SplashFragment"
         android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" />
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_dateListFragment"
+            app:destination="@id/dateListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dateListFragment"
+        android:name="com.facundocetraro.deptchallenge.ui.dateList.DateListFragment"
+        android:label="fragment_date_list"
+        tools:layout="@layout/fragment_date_list" />
 </navigation>
