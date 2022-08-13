@@ -34,7 +34,7 @@ class PhotoListAdapter :
                 photoItemBinding.photoProgress.visibility = View.GONE
                 Log.d("Loaded data:", layoutPosition.toString() + "-" + photo.localUri!!)
             } else {
-                photoItemBinding.imageView.setImageDrawable(null)
+                photoItemBinding.imageView.load(null)
                 photoItemBinding.photoProgress.visibility = View.VISIBLE
                 Log.d("Loaded data", "$layoutPosition- con valor nulo")
             }

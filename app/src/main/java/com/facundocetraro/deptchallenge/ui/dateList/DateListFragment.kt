@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.facundocetraro.deptchallenge.data.model.DateWithPhotos
 import com.facundocetraro.deptchallenge.databinding.FragmentDateListBinding
 import com.facundocetraro.deptchallenge.viewModel.DateListViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,9 +38,7 @@ class DateListFragment : Fragment() {
 
     private fun initRecyclerView() {
         val dateListAdapter = DateListAdapter(DateListAdapter.OnClickListener {
-            val action =
-                DateListFragmentDirections.actionDateListFragmentToPhotoListFragment(it.date)
-            findNavController().navigate(action)
+           showDatePhotos(it)
         })
         binding.dateList.apply {
             adapter = dateListAdapter
@@ -51,6 +50,12 @@ class DateListFragment : Fragment() {
             }
         }
 
+    }
+
+    private fun showDatePhotos(dateWithPhotos: DateWithPhotos) {
+        val action =
+            DateListFragmentDirections.actionDateListFragmentToPhotoListFragment(dateWithPhotos.imageDate.date)
+        findNavController().navigate(action)
     }
 
     private fun fetchDateList() {

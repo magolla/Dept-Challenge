@@ -1,5 +1,6 @@
 package com.facundocetraro.deptchallenge.data.source.imageDate
 
+import com.facundocetraro.deptchallenge.data.model.DateWithPhotos
 import com.facundocetraro.deptchallenge.data.model.ImageDate
 import com.facundocetraro.deptchallenge.data.model.Photo
 import com.facundocetraro.deptchallenge.di.PlanetDatabase
@@ -10,7 +11,7 @@ class ImageDateLocalDataSource @Inject constructor(private val planetDatabase: P
     suspend fun updateAll(imageDate: List<ImageDate>) {
         planetDatabase.imageDateDao().insertAll(imageDate)
     }
-    fun getAllImageDates(): Flow<List<ImageDate>> {
+    fun getAllImageDates(): Flow<List<DateWithPhotos>> {
         return planetDatabase.imageDateDao().getImageDatesDistinctUntilChanged()
     }
 

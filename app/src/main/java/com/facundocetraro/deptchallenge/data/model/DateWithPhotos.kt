@@ -5,7 +5,7 @@ import androidx.room.Relation
 
 
 data class DateWithPhotos(
-    @Embedded val user: ImageDate,
+    @Embedded val imageDate: ImageDate,
     @Relation(
         parentColumn = "date",
         entityColumn = "dateId"
