@@ -1,6 +1,6 @@
-package com.facundocetraro.deptchallenge.data.source
+package com.facundocetraro.deptchallenge.data.source.imageDate
 
-import com.facundocetraro.deptchallenge.data.ImageDate
+import com.facundocetraro.deptchallenge.data.model.ImageDate
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -17,4 +17,5 @@ class ImageDateRepositoryImpl @Inject constructor(
     override fun getAllImageDates(): Flow<List<ImageDate>> {
         return imageDateLocalDataSource.getAllImageDates()
     }
+
 }

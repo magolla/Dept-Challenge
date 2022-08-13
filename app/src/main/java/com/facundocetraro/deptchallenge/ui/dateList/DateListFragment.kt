@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.facundocetraro.deptchallenge.databinding.FragmentDateListBinding
 import com.facundocetraro.deptchallenge.viewModel.DateListViewModel
@@ -35,7 +36,11 @@ class DateListFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        val dateListAdapter =  DateListAdapter()
+        val dateListAdapter = DateListAdapter(DateListAdapter.OnClickListener {
+            val action =
+                DateListFragmentDirections.actionDateListFragmentToPhotoListFragment(it.date)
+            findNavController().navigate(action)
+        })
         binding.dateList.apply {
             adapter = dateListAdapter
             layoutManager = LinearLayoutManager(requireContext())

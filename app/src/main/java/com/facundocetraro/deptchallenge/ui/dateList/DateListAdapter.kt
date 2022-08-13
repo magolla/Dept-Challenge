@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.facundocetraro.deptchallenge.data.ImageDate
+import com.facundocetraro.deptchallenge.data.model.ImageDate
 import com.facundocetraro.deptchallenge.databinding.DateItemBinding
 
-class DateListAdapter() :
+class DateListAdapter(private val onClickListener: OnClickListener) :
     ListAdapter<ImageDate, DateListAdapter.DateHolder>(ImageDateDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DateHolder {
@@ -28,9 +28,19 @@ class DateListAdapter() :
     }
 
     override fun onBindViewHolder(holder: DateHolder, position: Int) {
-        holder.bind(getItem(position))
+        val photo = getItem(position)
+        holder.bind(photo)
+        holder.itemView.setOnClickListener {
+            onClickListener.onClick(photo)
+        }
+    }
+
+    class OnClickListener(val clickListener: (imageDate: ImageDate) -> Unit) {
+        fun onClick(imageDate: ImageDate) = clickListener(imageDate)
     }
 }
+
+
 
 object ImageDateDiffCallback : DiffUtil.ItemCallback<ImageDate>() {
     override fun areItemsTheSame(oldItem: ImageDate, newItem: ImageDate): Boolean {

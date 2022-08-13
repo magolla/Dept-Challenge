@@ -1,7 +1,7 @@
-package com.facundocetraro.deptchallenge.data.source
+package com.facundocetraro.deptchallenge.data.source.imageDate
 
-import com.facundocetraro.deptchallenge.data.ImageDate
-import com.facundocetraro.deptchallenge.data.source.dao.ImageDateDao
+import com.facundocetraro.deptchallenge.data.model.ImageDate
+import com.facundocetraro.deptchallenge.data.model.Photo
 import com.facundocetraro.deptchallenge.di.PlanetDatabase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -12,6 +12,10 @@ class ImageDateLocalDataSource @Inject constructor(private val planetDatabase: P
     }
     fun getAllImageDates(): Flow<List<ImageDate>> {
         return planetDatabase.imageDateDao().getImageDatesDistinctUntilChanged()
+    }
+
+    fun getAllPhotosFromDate(photoDate: String): Flow<List<Photo>> {
+        return planetDatabase.photoDao().getPhotoDistinctUntilChanged(photoDate)
     }
 
 }

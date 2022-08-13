@@ -12,7 +12,7 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 class DataBaseModule {
 
-    private val databaseName = "MoeDatabase"
+    private val databaseName = "EpicDatabase"
 
     @Provides
     fun provideAppDatabase(@ApplicationContext appContext: Context): PlanetDatabase {
@@ -20,7 +20,7 @@ class DataBaseModule {
             appContext,
             PlanetDatabase::class.java,
             databaseName
-        )
+        ).fallbackToDestructiveMigration()
             .build()
     }
 }

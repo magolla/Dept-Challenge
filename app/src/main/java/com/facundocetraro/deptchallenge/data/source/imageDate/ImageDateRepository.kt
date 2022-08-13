@@ -1,6 +1,6 @@
-package com.facundocetraro.deptchallenge.data.source
+package com.facundocetraro.deptchallenge.data.source.imageDate
 
-import com.facundocetraro.deptchallenge.data.ImageDate
+import com.facundocetraro.deptchallenge.data.model.ImageDate
 import kotlinx.coroutines.flow.Flow
 
 interface ImageDateRepository {

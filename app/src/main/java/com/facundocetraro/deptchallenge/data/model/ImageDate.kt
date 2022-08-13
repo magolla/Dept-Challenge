@@ -1,9 +1,9 @@
-package com.facundocetraro.deptchallenge.data
+package com.facundocetraro.deptchallenge.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "imageData")
+@Entity(tableName = "imageDate")
 data class ImageDate(
     @PrimaryKey val date: String
 )

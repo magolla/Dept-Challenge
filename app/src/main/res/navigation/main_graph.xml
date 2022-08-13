@@ -12,11 +12,26 @@
         tools:layout="@layout/fragment_splash" >
         <action
             android:id="@+id/action_splashFragment_to_dateListFragment"
-            app:destination="@id/dateListFragment" />
+            app:destination="@id/dateListFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/dateListFragment"
         android:name="com.facundocetraro.deptchallenge.ui.dateList.DateListFragment"
         android:label="fragment_date_list"
-        tools:layout="@layout/fragment_date_list" />
+        tools:layout="@layout/fragment_date_list" >
+        <action
+            android:id="@+id/action_dateListFragment_to_photoListFragment"
+            app:destination="@id/photoListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoListFragment"
+        android:name="com.facundocetraro.deptchallenge.ui.photoList.PhotoListFragment"
+        android:label="fragment_photo_list"
+        tools:layout="@layout/fragment_photo_list" >
+        <argument
+            android:name="PhotoDate"
+            app:argType="string" />
+    </fragment>
 </navigation>
