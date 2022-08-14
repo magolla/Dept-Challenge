@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
+import com.facundocetraro.deptchallenge.R
 import com.facundocetraro.deptchallenge.databinding.FragmentPhotoListBinding
 import com.facundocetraro.deptchallenge.viewModel.PhotoListViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,7 +46,17 @@ class PhotoListFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        val photoAdapter = PhotoListAdapter()
+        val photoAdapter = PhotoListAdapter(PhotoListAdapter.OnClickListener { photo ->
+            if(photo.localUri == null) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.image_not_loaded_yet),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+
+            }
+        })
         binding.photoList.apply {
             adapter = photoAdapter
             layoutManager = GridLayoutManager(requireContext(), 2)

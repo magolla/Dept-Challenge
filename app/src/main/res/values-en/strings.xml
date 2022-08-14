@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DeptChallenge</string>
+    <string name="image_not_loaded_yet">"Image has not been loaded yet "</string>
+</resources>

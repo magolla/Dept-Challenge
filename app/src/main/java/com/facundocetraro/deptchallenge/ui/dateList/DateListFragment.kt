@@ -49,7 +49,6 @@ class DateListFragment : Fragment() {
                 dateListAdapter.submitList(imageDateList)
             }
         }
-
     }
 
     private fun showDatePhotos(dateWithPhotos: DateWithPhotos) {

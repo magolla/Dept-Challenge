@@ -9,11 +9,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import coil.load
+import com.facundocetraro.deptchallenge.data.model.DateWithPhotos
 import com.facundocetraro.deptchallenge.data.model.Photo
 import com.facundocetraro.deptchallenge.databinding.PhotoItemBinding
 import java.io.File
 
-class PhotoListAdapter :
+class PhotoListAdapter(val onClickListener: OnClickListener) :
     ListAdapter<Photo, PhotoListAdapter.PhotoHolder>(PhotoDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoHolder {
@@ -42,7 +43,15 @@ class PhotoListAdapter :
     }
 
     override fun onBindViewHolder(holder: PhotoHolder, position: Int) {
-        holder.bind(getItem(position))
+        val photo = getItem(position)
+        holder.bind(photo)
+        holder.itemView.setOnClickListener {
+            onClickListener.onClicked(photo)
+        }
+    }
+
+    class OnClickListener(val clickListener: (photo: Photo) -> Unit) {
+        fun onClicked(photo: Photo) = clickListener(photo)
     }
 }
 
