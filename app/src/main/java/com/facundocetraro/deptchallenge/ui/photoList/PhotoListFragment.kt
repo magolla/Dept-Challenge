@@ -28,6 +28,8 @@ class PhotoListFragment : Fragment() {
 
     private val args: PhotoListFragmentArgs by navArgs()
 
+    private var photoAdapter: PhotoListAdapter? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,19 +51,24 @@ class PhotoListFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        val photoAdapter = PhotoListAdapter(PhotoListAdapter.OnClickListener { photo ->
-            if (photo.localUri == null) {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.image_not_loaded_yet),
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                val result =
-                    PhotoListFragmentDirections.actionPhotoListFragmentToPhotoScreenFragment(photo.identifier)
-                findNavController().navigate(result)
-            }
-        })
+        if (photoAdapter == null) {
+            photoAdapter = PhotoListAdapter(PhotoListAdapter.OnClickListener { photo ->
+                if (photo.localUri == null) {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.image_not_loaded_yet),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    val result =
+                        PhotoListFragmentDirections.actionPhotoListFragmentToPhotoScreenFragment(
+                            photo.identifier
+                        )
+                    findNavController().navigate(result)
+                }
+            })
+
+        }
         binding.photoList.apply {
             adapter = photoAdapter
             val spanCount =
@@ -70,7 +77,7 @@ class PhotoListFragment : Fragment() {
         }
         lifecycle.coroutineScope.launch {
             photoListViewModel.getPhotosFlow(args.photoDate).collect { photoList ->
-                photoAdapter.submitList(photoList)
+                photoAdapter?.submitList(photoList)
                 shouldChangeLoadedIcon(photoList.isNotEmpty() && photoList.all { it.localUri != null })
             }
         }
@@ -78,13 +85,22 @@ class PhotoListFragment : Fragment() {
 
     private fun shouldChangeLoadedIcon(allImagesDownloaded: Boolean) {
         if (allImagesDownloaded) {
-            binding.loadingIcon.load(R.drawable.ic_baseline_play_arrow_24)
+            binding.loadingIcon.visibility = View.VISIBLE
+            binding.progress.visibility = View.GONE
             binding.loadingIcon.setOnClickListener {
-
+                val action =
+                    PhotoListFragmentDirections.actionPhotoListFragmentToPlayerScreenFragment(args.photoDate)
+                findNavController().navigate(action)
             }
         } else {
-            binding.loadingIcon.load(R.drawable.ic_baseline_cloud_download_24)
+            binding.loadingIcon.visibility = View.GONE
+            binding.progress.visibility = View.VISIBLE
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
     }
 
 }

@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class DateListFragment : Fragment() {
 
+    private var dateListAdapter: DateListAdapter? = null
     private lateinit var binding: FragmentDateListBinding
 
     private val dateListViewModel: DateListViewModel by viewModels()
@@ -37,16 +38,19 @@ class DateListFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        val dateListAdapter = DateListAdapter(DateListAdapter.OnClickListener {
-           showDatePhotos(it)
-        })
+        if (dateListAdapter == null) {
+            dateListAdapter = DateListAdapter(DateListAdapter.OnClickListener {
+                showDatePhotos(it)
+            })
+        }
+
         binding.dateList.apply {
             adapter = dateListAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
         lifecycle.coroutineScope.launch {
             dateListViewModel.getImageDatesFlow().collect { imageDateList ->
-                dateListAdapter.submitList(imageDateList)
+                dateListAdapter?.submitList(imageDateList)
             }
         }
     }

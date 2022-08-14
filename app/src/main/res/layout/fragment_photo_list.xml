@@ -16,8 +16,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        tools:title="Dept App"
-        app:titleTextColor="@color/white">
+        app:titleTextColor="@color/white"
+        tools:title="Dept App">
 
         <ImageView
             android:id="@+id/loading_icon"
@@ -25,8 +25,17 @@
             android:layout_height="match_parent"
             android:layout_gravity="end"
             android:layout_marginEnd="18dp"
-            android:src="@drawable/ic_baseline_cloud_download_24"
+            android:src="@drawable/ic_baseline_play_arrow_24"
+            android:visibility="gone"
             app:tint="@color/white" />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:visibility="gone"
+            android:layout_marginEnd="18dp" />
 
     </androidx.appcompat.widget.Toolbar>
 

@@ -2,4 +2,7 @@
 <resources>
     <string name="app_name">DeptChallenge</string>
     <string name="image_not_loaded_yet">"Image has not been loaded yet "</string>
+    <string name="photo_name">Name: %1$s</string>
+    <string name="photo_description">Description: %1$s</string>
+    <string name="photo_date">Date: %1$s</string>
 </resources>

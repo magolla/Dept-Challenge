@@ -18,7 +18,11 @@ class DateListViewModel @Inject constructor(private val imageDateRepository: Ima
 
     fun fetchDateList() {
         viewModelScope.launch {
-            imageDateRepository.fetchImageDate()
+            try {
+                imageDateRepository.fetchImageDate()
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+            }
         }
     }
 

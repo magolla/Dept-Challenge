@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:text="Dept Challenge"
+        android:text="@string/dept_challenge"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/astronaut_animation"
@@ -20,13 +20,15 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/astronaut_animation"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
+        android:scaleType="centerInside"
         app:lottie_loop="true"
+        android:adjustViewBounds="true"
         app:lottie_rawRes="@raw/satellite_moon_astronaut" />
 </androidx.constraintlayout.widget.ConstraintLayout>

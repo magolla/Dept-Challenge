@@ -1,7 +1,5 @@
 package com.facundocetraro.deptchallenge.ui.photoList
 
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +7,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import coil.request.ImageRequest
 import com.facundocetraro.deptchallenge.R
 import com.facundocetraro.deptchallenge.data.model.Photo
 import com.facundocetraro.deptchallenge.databinding.PhotoItemBinding
@@ -29,6 +26,7 @@ class PhotoListAdapter(private val onClickListener: OnClickListener) :
         )
     }
 
+
     class PhotoHolder(private val photoItemBinding: PhotoItemBinding) :
         RecyclerView.ViewHolder(photoItemBinding.root) {
         fun bind(photo: Photo) {
@@ -36,14 +34,8 @@ class PhotoListAdapter(private val onClickListener: OnClickListener) :
                 photoItemBinding.imageView.load(File(photo.localUri!!))
                 photoItemBinding.photoProgress.visibility = View.GONE
             } else {
+                photoItemBinding.photoProgress.visibility = View.VISIBLE
                 photoItemBinding.imageView.load(photo.getPhotoThumbUrl()) {
-                    listener(onStart = {
-                        photoItemBinding.photoProgress.visibility = View.VISIBLE
-                    }, onSuccess = { _, _ ->
-                        photoItemBinding.photoProgress.visibility = View.GONE
-                    }, onError = { _, _ ->
-                        photoItemBinding.photoProgress.visibility = View.GONE
-                    })
                     error(R.drawable.image_load_failed)
                 }
             }

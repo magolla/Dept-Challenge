@@ -18,7 +18,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:title="Dept App"
-        app:titleTextColor="@color/white" />
+        app:titleTextColor="@color/white" >
+
+        <ImageView
+            android:id="@+id/metadata_icon"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:layout_marginEnd="18dp"
+            android:src="@drawable/ic_baseline_article_24"
+            app:tint="@color/white" />
+    </androidx.appcompat.widget.Toolbar>
+
 
     <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/photo_view"

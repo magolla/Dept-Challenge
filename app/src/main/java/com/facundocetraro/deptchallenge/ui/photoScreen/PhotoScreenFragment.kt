@@ -7,16 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import coil.ImageLoader
 import coil.load
-import coil.request.ImageRequest
 import com.facundocetraro.deptchallenge.databinding.FragmentPhotoScreenBinding
 import com.facundocetraro.deptchallenge.viewModel.PhotoScreenViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class PhotoScreenFragment : Fragment() {
@@ -41,7 +38,15 @@ class PhotoScreenFragment : Fragment() {
             lifecycle.coroutineScope.launch {
                 binding.photoView.load(photo.localUri)
             }
+            binding.metadataIcon.setOnClickListener {
+                val action =
+                    PhotoScreenFragmentDirections.actionPhotoScreenFragmentToPhotoMetadataDialogFragment(
+                        photo
+                    )
+                findNavController().navigate(action)
+            }
         }
+
     }
 
 }

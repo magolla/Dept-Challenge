@@ -36,6 +36,9 @@
         <action
             android:id="@+id/action_photoListFragment_to_photoScreenFragment"
             app:destination="@id/photoScreenFragment" />
+        <action
+            android:id="@+id/action_photoListFragment_to_playerScreenFragment"
+            app:destination="@id/playerScreenFragment" />
     </fragment>
     <fragment
         android:id="@+id/photoScreenFragment"
@@ -45,5 +48,26 @@
         <argument
             android:name="PhotoId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_photoScreenFragment_to_photoMetadataDialogFragment"
+            app:destination="@id/photoMetadataDialogFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/playerScreenFragment"
+        android:name="com.facundocetraro.deptchallenge.ui.playerScreen.PlayerScreenFragment"
+        android:label="fragment_player_screen"
+        tools:layout="@layout/fragment_player_screen" >
+        <argument
+            android:name="PhotoDate"
+            app:argType="string" />
+    </fragment>
+    <dialog
+        android:id="@+id/photoMetadataDialogFragment"
+        android:name="com.facundocetraro.deptchallenge.ui.photoMetadata.PhotoMetadataDialogFragment"
+        android:label="fragment_photo_metadata_dialog"
+        tools:layout="@layout/fragment_photo_metadata_dialog" >
+        <argument
+            android:name="PhotoMetadata"
+            app:argType="com.facundocetraro.deptchallenge.data.model.Photo" />
+    </dialog>
 </navigation>
