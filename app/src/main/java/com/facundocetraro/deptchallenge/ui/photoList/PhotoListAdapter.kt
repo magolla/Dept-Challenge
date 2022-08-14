@@ -1,5 +1,6 @@
 package com.facundocetraro.deptchallenge.ui.photoList
 
+import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -7,14 +8,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.ImageLoader
 import coil.load
-import com.facundocetraro.deptchallenge.data.model.DateWithPhotos
+import coil.request.ImageRequest
+import com.facundocetraro.deptchallenge.R
 import com.facundocetraro.deptchallenge.data.model.Photo
 import com.facundocetraro.deptchallenge.databinding.PhotoItemBinding
 import java.io.File
 
-class PhotoListAdapter(val onClickListener: OnClickListener) :
+
+class PhotoListAdapter(private val onClickListener: OnClickListener) :
     ListAdapter<Photo, PhotoListAdapter.PhotoHolder>(PhotoDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoHolder {
@@ -33,12 +35,19 @@ class PhotoListAdapter(val onClickListener: OnClickListener) :
             if (photo.localUri != null) {
                 photoItemBinding.imageView.load(File(photo.localUri!!))
                 photoItemBinding.photoProgress.visibility = View.GONE
-                Log.d("Loaded data:", layoutPosition.toString() + "-" + photo.localUri!!)
             } else {
-                photoItemBinding.imageView.load(null)
-                photoItemBinding.photoProgress.visibility = View.VISIBLE
-                Log.d("Loaded data", "$layoutPosition- con valor nulo")
+                photoItemBinding.imageView.load(photo.getPhotoThumbUrl()) {
+                    listener(onStart = {
+                        photoItemBinding.photoProgress.visibility = View.VISIBLE
+                    }, onSuccess = { _, _ ->
+                        photoItemBinding.photoProgress.visibility = View.GONE
+                    }, onError = { _, _ ->
+                        photoItemBinding.photoProgress.visibility = View.GONE
+                    })
+                    error(R.drawable.image_load_failed)
+                }
             }
+
         }
     }
 

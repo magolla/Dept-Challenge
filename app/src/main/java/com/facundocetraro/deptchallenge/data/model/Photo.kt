@@ -14,9 +14,8 @@ data class Photo(
     fun getPhotoJpgUrl(): String {
         return "${getSplitedUrl()}/jpg/${image}.jpg"
     }
-
-    fun getPhotoPngUrl(): String {
-        return "${getSplitedUrl()}/png/${image}.png"
+    fun getPhotoThumbUrl(): String {
+        return "${getSplitedUrl()}/thumbs/${image}.jpg"
     }
 
     private fun getSplitedUrl(): String {

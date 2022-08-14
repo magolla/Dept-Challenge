@@ -20,4 +20,7 @@ interface PhotoDao {
     @Update
     suspend fun update(photo: Photo)
 
+    @Query("SELECT * FROM photo WHERE identifier=:photoId ")
+    suspend fun getPhotoById(photoId: String): Photo
+
 }

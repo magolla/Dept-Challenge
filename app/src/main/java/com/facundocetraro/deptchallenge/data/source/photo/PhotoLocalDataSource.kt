@@ -18,4 +18,8 @@ class PhotoLocalDataSource @Inject constructor(private val planetDatabase: Plane
         planetDatabase.photoDao().update(photo)
     }
 
+    suspend fun getPhotoById(photoId: String): Photo {
+        return planetDatabase.photoDao().getPhotoById(photoId)
+    }
+
 }

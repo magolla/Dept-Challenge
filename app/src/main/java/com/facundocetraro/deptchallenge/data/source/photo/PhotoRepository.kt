@@ -7,4 +7,5 @@ interface PhotoRepository {
     suspend fun fetchPhotosFromDateAndStoreThem(imageDate: String)
     fun getAllPhotosFromDate(photoDate: String): Flow<List<Photo>>
     suspend fun startDownloadingPendingImages(imageDate: String)
+    suspend fun getPhotoById(photoId: String): Photo
 }

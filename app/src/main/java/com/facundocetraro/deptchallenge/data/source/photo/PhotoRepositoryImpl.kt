@@ -34,6 +34,10 @@ class PhotoRepositoryImpl @Inject constructor(
         downloadImagesFromList(localPhotos.first())
     }
 
+    override suspend fun getPhotoById(photoId: String): Photo {
+        return photoLocalDataSource.getPhotoById(photoId)
+    }
+
     private suspend fun downloadImagesFromList(photoList: List<Photo>) {
         val imageLoader = ImageLoader(appContext)
 
