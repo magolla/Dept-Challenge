@@ -9,8 +9,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import coil.load
+import com.facundocetraro.deptchallenge.R
 import com.facundocetraro.deptchallenge.data.model.DateWithPhotos
 import com.facundocetraro.deptchallenge.databinding.FragmentDateListBinding
+import com.facundocetraro.deptchallenge.util.ConnectivityUtil
 import com.facundocetraro.deptchallenge.viewModel.DateListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -35,6 +38,28 @@ class DateListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         fetchDateList()
         initRecyclerView()
+
+        dateListViewModel.downloadStatus.observe(viewLifecycleOwner) { downloadStatus ->
+            binding.progress.visibility = View.GONE
+            when (downloadStatus) {
+                DateListViewModel.DownloadStatus.CONTAIN_ELEMENTS -> {
+                    binding.dateList.visibility = View.VISIBLE
+                    binding.errorContainer.visibility = View.GONE
+                }
+                DateListViewModel.DownloadStatus.EMPTY_ELEMENTS -> {
+                    showEmptyElementMessage()
+                }
+                else -> {
+                    binding.dateList.visibility = View.GONE
+                    binding.errorContainer.visibility = View.VISIBLE
+                    binding.errorImage.load(R.drawable.warning_error)
+                    binding.errorMessage.text = getString(R.string.error_fetching_elements)
+                }
+            }
+        }
+        binding.tryAgainButton.setOnClickListener {
+            fetchDateList()
+        }
     }
 
     private fun initRecyclerView() {
@@ -51,7 +76,25 @@ class DateListFragment : Fragment() {
         lifecycle.coroutineScope.launch {
             dateListViewModel.getImageDatesFlow().collect { imageDateList ->
                 dateListAdapter?.submitList(imageDateList)
+                binding.progress.visibility = View.GONE
+                if (imageDateList.isEmpty()) {
+                    checkInternet()
+                } else {
+                    binding.dateList.visibility = View.VISIBLE
+                    binding.errorContainer.visibility = View.GONE
+                }
             }
+        }
+    }
+
+    private fun checkInternet() {
+        if (!ConnectivityUtil.hasInternetConnection(requireContext().applicationContext)) {
+            binding.dateList.visibility = View.GONE
+            binding.errorContainer.visibility = View.VISIBLE
+            binding.errorMessage.text = getString(R.string.there_is_not_internet)
+            binding.errorImage.load(R.drawable.warning_error)
+        } else {
+            showEmptyElementMessage()
         }
     }
 
@@ -63,6 +106,13 @@ class DateListFragment : Fragment() {
 
     private fun fetchDateList() {
         dateListViewModel.fetchDateList()
+    }
+
+    private fun showEmptyElementMessage() {
+        binding.dateList.visibility = View.GONE
+        binding.errorContainer.visibility = View.VISIBLE
+        binding.errorMessage.text = getString(R.string.empty_elements)
+        binding.errorImage.load(R.drawable.empty_element)
     }
 
 }

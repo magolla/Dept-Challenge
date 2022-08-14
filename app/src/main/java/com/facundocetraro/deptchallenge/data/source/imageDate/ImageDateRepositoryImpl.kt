@@ -10,9 +10,10 @@ class ImageDateRepositoryImpl @Inject constructor(
     private val imageDateLocalDataSource: ImageDateLocalDataSource
 ) :
     ImageDateRepository {
-    override suspend fun fetchImageDate() {
+    override suspend fun fetchImageDate(): List<ImageDate> {
         val imageDate = imageDateRemoteDataSource.getAllImageDates()
         imageDateLocalDataSource.updateAll(imageDate)
+        return imageDate
     }
 
     override fun getAllImageDates(): Flow<List<DateWithPhotos>> {

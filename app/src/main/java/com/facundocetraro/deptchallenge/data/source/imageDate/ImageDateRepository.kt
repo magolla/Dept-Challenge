@@ -5,6 +5,6 @@ import com.facundocetraro.deptchallenge.data.model.ImageDate
 import kotlinx.coroutines.flow.Flow
 
 interface ImageDateRepository {
-    suspend fun fetchImageDate()
+    suspend fun fetchImageDate(): List<ImageDate>
     fun getAllImageDates(): Flow<List<DateWithPhotos>>
 }

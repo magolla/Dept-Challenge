@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import coil.load
 import com.facundocetraro.deptchallenge.R
 import com.facundocetraro.deptchallenge.databinding.FragmentPhotoListBinding
+import com.facundocetraro.deptchallenge.util.ConnectivityUtil
 import com.facundocetraro.deptchallenge.viewModel.PhotoListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -43,7 +44,9 @@ class PhotoListFragment : Fragment() {
         initRecyclerView()
         fetchPhotoList()
         binding.photoToolbar.title = args.photoDate
-
+        binding.tryAgainButton.setOnClickListener {
+            fetchPhotoList()
+        }
     }
 
     private fun fetchPhotoList() {
@@ -79,7 +82,23 @@ class PhotoListFragment : Fragment() {
             photoListViewModel.getPhotosFlow(args.photoDate).collect { photoList ->
                 photoAdapter?.submitList(photoList)
                 shouldChangeLoadedIcon(photoList.isNotEmpty() && photoList.all { it.localUri != null })
+                if (photoList.isEmpty()) {
+                    checkInternet()
+                } else {
+                    binding.photoList.visibility = View.VISIBLE
+                    binding.errorContainer.visibility = View.GONE
+                }
+
             }
+        }
+    }
+
+    private fun checkInternet() {
+        if (!ConnectivityUtil.hasInternetConnection(requireContext().applicationContext)) {
+            binding.photoList.visibility = View.GONE
+            binding.errorContainer.visibility = View.VISIBLE
+            binding.errorMessage.text = getString(R.string.there_is_not_internet)
+            binding.errorImage.load(R.drawable.warning_error)
         }
     }
 
@@ -96,11 +115,6 @@ class PhotoListFragment : Fragment() {
             binding.loadingIcon.visibility = View.GONE
             binding.progress.visibility = View.VISIBLE
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-
     }
 
 }

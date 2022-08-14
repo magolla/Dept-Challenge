@@ -5,4 +5,8 @@
     <string name="photo_name">Name: %1$s</string>
     <string name="photo_description">Description: %1$s</string>
     <string name="photo_date">Date: %1$s</string>
+    <string name="there_is_not_internet">There is not internet connection</string>
+    <string name="error_fetching_elements">There was an error fetching elements</string>
+    <string name="empty_elements">There is not elements</string>
+    <string name="try_again">Try again</string>
 </resources>
