@@ -50,7 +50,6 @@ class PhotoRepositoryImpl @Inject constructor(
                 ex.printStackTrace()
             }
         }
-
     }
 
     private suspend fun storeInDirectory(imageLoader: ImageLoader, photo: Photo): String {
@@ -65,7 +64,7 @@ class PhotoRepositoryImpl @Inject constructor(
         var file = File(extStorageDirectory, photo.dateId)
 
         if (!file.exists()) {
-            file.mkdirs();
+            file.mkdirs()
         }
         file = File(file.toString(), photo.image + ".jpg")
         val outStream = FileOutputStream(file)

@@ -10,7 +10,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 @HiltViewModel
 class PhotoScreenViewModel @Inject constructor(private val photoRepository: PhotoRepository) :
     ViewModel() {
@@ -25,9 +24,7 @@ class PhotoScreenViewModel @Inject constructor(private val photoRepository: Phot
                 val photo = photoRepository.getPhotoById(photoId)
                 _photoLiveData.value = photo
             } catch (ex: Exception) {
-
             }
         }
-
     }
 }

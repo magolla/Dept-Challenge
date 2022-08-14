@@ -19,5 +19,4 @@ class ImageDateRepositoryImpl @Inject constructor(
     override fun getAllImageDates(): Flow<List<DateWithPhotos>> {
         return imageDateLocalDataSource.getAllImageDates()
     }
-
 }

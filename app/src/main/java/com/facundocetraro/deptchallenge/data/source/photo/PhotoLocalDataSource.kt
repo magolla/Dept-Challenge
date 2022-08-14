@@ -21,5 +21,4 @@ class PhotoLocalDataSource @Inject constructor(private val planetDatabase: Plane
     suspend fun getPhotoById(photoId: String): Photo {
         return planetDatabase.photoDao().getPhotoById(photoId)
     }
-
 }

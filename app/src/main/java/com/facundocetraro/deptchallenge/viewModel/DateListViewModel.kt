@@ -32,7 +32,6 @@ class DateListViewModel @Inject constructor(
                 val dateList = imageDateRepository.fetchImageDate()
                 _downloadStatus.value =
                     if (dateList.isNotEmpty()) DownloadStatus.CONTAIN_ELEMENTS else DownloadStatus.EMPTY_ELEMENTS
-
             } catch (ex: Exception) {
                 ex.printStackTrace()
                 if (ConnectivityUtil.hasInternetConnection(context)) {
@@ -47,5 +46,4 @@ class DateListViewModel @Inject constructor(
         EMPTY_ELEMENTS,
         GENERIC_ERROR
     }
-
 }

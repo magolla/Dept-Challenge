@@ -27,7 +27,8 @@ class DateListFragment : Fragment() {
     private val dateListViewModel: DateListViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentDateListBinding.inflate(layoutInflater)
@@ -64,9 +65,11 @@ class DateListFragment : Fragment() {
 
     private fun initRecyclerView() {
         if (dateListAdapter == null) {
-            dateListAdapter = DateListAdapter(DateListAdapter.OnClickListener {
-                showDatePhotos(it)
-            })
+            dateListAdapter = DateListAdapter(
+                DateListAdapter.OnClickListener {
+                    showDatePhotos(it)
+                }
+            )
         }
 
         binding.dateList.apply {
@@ -114,6 +117,4 @@ class DateListFragment : Fragment() {
         binding.errorMessage.text = getString(R.string.empty_elements)
         binding.errorImage.load(R.drawable.empty_element)
     }
-
 }
-

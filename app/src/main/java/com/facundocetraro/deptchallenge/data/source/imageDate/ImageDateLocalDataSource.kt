@@ -18,5 +18,4 @@ class ImageDateLocalDataSource @Inject constructor(private val planetDatabase: P
     fun getAllPhotosFromDate(photoDate: String): Flow<List<Photo>> {
         return planetDatabase.photoDao().getPhotoDistinctUntilChanged(photoDate)
     }
-
 }

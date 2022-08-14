@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.navArgs
-import coil.load
 import com.facundocetraro.deptchallenge.databinding.FragmentPlayerScreenBinding
 import com.facundocetraro.deptchallenge.viewModel.PlayerScreenViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,7 +25,8 @@ class PlayerScreenFragment : Fragment() {
     private val args: PlayerScreenFragmentArgs by navArgs()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPlayerScreenBinding.inflate(layoutInflater)
@@ -47,5 +47,4 @@ class PlayerScreenFragment : Fragment() {
             }
         }
     }
-
 }

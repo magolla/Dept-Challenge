@@ -53,8 +53,6 @@ class DateListAdapter(private val onClickListener: OnClickListener) :
                     }
                 }
             }
-
-
         }
     }
 
@@ -70,7 +68,6 @@ class DateListAdapter(private val onClickListener: OnClickListener) :
         fun onClick(DateWithPhotos: DateWithPhotos) = clickListener(DateWithPhotos)
     }
 }
-
 
 object DateWithPhotosDiffCallback : DiffUtil.ItemCallback<DateWithPhotos>() {
     override fun areItemsTheSame(oldItem: DateWithPhotos, newItem: DateWithPhotos): Boolean {

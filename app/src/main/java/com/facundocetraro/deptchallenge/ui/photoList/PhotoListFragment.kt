@@ -32,7 +32,8 @@ class PhotoListFragment : Fragment() {
     private var photoAdapter: PhotoListAdapter? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPhotoListBinding.inflate(layoutInflater)
@@ -55,22 +56,23 @@ class PhotoListFragment : Fragment() {
 
     private fun initRecyclerView() {
         if (photoAdapter == null) {
-            photoAdapter = PhotoListAdapter(PhotoListAdapter.OnClickListener { photo ->
-                if (photo.localUri == null) {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.image_not_loaded_yet),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    val result =
-                        PhotoListFragmentDirections.actionPhotoListFragmentToPhotoScreenFragment(
-                            photo.identifier
-                        )
-                    findNavController().navigate(result)
+            photoAdapter = PhotoListAdapter(
+                PhotoListAdapter.OnClickListener { photo ->
+                    if (photo.localUri == null) {
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.image_not_loaded_yet),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        val result =
+                            PhotoListFragmentDirections.actionPhotoListFragmentToPhotoScreenFragment(
+                                photo.identifier
+                            )
+                        findNavController().navigate(result)
+                    }
                 }
-            })
-
+            )
         }
         binding.photoList.apply {
             adapter = photoAdapter
@@ -88,7 +90,6 @@ class PhotoListFragment : Fragment() {
                     binding.photoList.visibility = View.VISIBLE
                     binding.errorContainer.visibility = View.GONE
                 }
-
             }
         }
     }
@@ -116,5 +117,4 @@ class PhotoListFragment : Fragment() {
             binding.progress.visibility = View.VISIBLE
         }
     }
-
 }

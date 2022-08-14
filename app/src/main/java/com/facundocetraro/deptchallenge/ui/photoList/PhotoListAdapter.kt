@@ -12,7 +12,6 @@ import com.facundocetraro.deptchallenge.data.model.Photo
 import com.facundocetraro.deptchallenge.databinding.PhotoItemBinding
 import java.io.File
 
-
 class PhotoListAdapter(private val onClickListener: OnClickListener) :
     ListAdapter<Photo, PhotoListAdapter.PhotoHolder>(PhotoDiffCallback) {
 
@@ -26,7 +25,6 @@ class PhotoListAdapter(private val onClickListener: OnClickListener) :
         )
     }
 
-
     class PhotoHolder(private val photoItemBinding: PhotoItemBinding) :
         RecyclerView.ViewHolder(photoItemBinding.root) {
         fun bind(photo: Photo) {
@@ -39,7 +37,6 @@ class PhotoListAdapter(private val onClickListener: OnClickListener) :
                     error(R.drawable.image_load_failed)
                 }
             }
-
         }
     }
 

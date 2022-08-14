@@ -39,10 +39,8 @@ class NetworkModule {
     }
 
     @Provides
-    fun provideOkHttpClient(
-    ): OkHttpClient {
+    fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .build()
     }
-
 }

@@ -21,6 +21,5 @@ class ConnectivityUtil {
                 else -> false
             }
         }
-
     }
 }

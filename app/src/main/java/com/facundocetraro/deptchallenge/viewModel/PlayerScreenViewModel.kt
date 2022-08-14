@@ -13,5 +13,4 @@ class PlayerScreenViewModel @Inject constructor(private val photoRepository: Pho
 
     fun getPhotosFlow(photoDate: String): Flow<List<Photo>> =
         photoRepository.getAllPhotosFromDate(photoDate)
-
 }

@@ -12,4 +12,3 @@ abstract class PlanetDatabase : RoomDatabase() {
     abstract fun imageDateDao(): ImageDateDao
     abstract fun photoDao(): PhotoDao
 }
-

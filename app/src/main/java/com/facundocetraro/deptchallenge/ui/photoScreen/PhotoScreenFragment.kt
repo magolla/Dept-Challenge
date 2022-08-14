@@ -24,7 +24,8 @@ class PhotoScreenFragment : Fragment() {
     private val args: PhotoScreenFragmentArgs by navArgs()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPhotoScreenBinding.inflate(layoutInflater)
@@ -46,7 +47,5 @@ class PhotoScreenFragment : Fragment() {
                 findNavController().navigate(action)
             }
         }
-
     }
-
 }

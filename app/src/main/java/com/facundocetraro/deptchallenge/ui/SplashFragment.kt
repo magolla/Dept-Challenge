@@ -9,7 +9,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.facundocetraro.deptchallenge.R
 import com.facundocetraro.deptchallenge.databinding.FragmentSplashBinding
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -25,7 +24,8 @@ class SplashFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentSplashBinding.inflate(layoutInflater)
@@ -45,5 +45,4 @@ class SplashFragment : Fragment() {
             findNavController().navigate(R.id.action_splashFragment_to_dateListFragment)
         }
     }
-
 }

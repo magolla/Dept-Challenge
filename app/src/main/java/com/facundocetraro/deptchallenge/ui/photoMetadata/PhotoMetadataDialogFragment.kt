@@ -16,7 +16,8 @@ class PhotoMetadataDialogFragment : DialogFragment() {
     private val args: PhotoMetadataDialogFragmentArgs by navArgs()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPhotoMetadataDialogBinding.inflate(layoutInflater)

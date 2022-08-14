@@ -5,7 +5,6 @@ import com.facundocetraro.deptchallenge.data.model.Photo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 
-
 @Dao
 interface PhotoDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -22,5 +21,4 @@ interface PhotoDao {
 
     @Query("SELECT * FROM photo WHERE identifier=:photoId ")
     suspend fun getPhotoById(photoId: String): Photo
-
 }

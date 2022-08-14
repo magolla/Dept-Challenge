@@ -17,5 +17,4 @@ interface ImageDateDao {
 
     fun getImageDatesDistinctUntilChanged() =
         getUsersWithPlaylists().distinctUntilChanged()
-
 }
