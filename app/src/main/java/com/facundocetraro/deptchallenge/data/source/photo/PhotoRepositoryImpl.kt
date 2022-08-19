@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import androidx.core.graphics.drawable.toBitmap
 import coil.ImageLoader
 import coil.request.ImageRequest
+import com.autodesk.coroutineworker.CoroutineWorker
 import com.facundocetraro.deptchallenge.data.model.Photo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -29,27 +30,31 @@ class PhotoRepositoryImpl @Inject constructor(
         return photoLocalDataSource.getAllPhotosFromDate(photoDate)
     }
 
-    override suspend fun startDownloadingPendingImages(imageDate: String) {
+    override suspend fun startDownloadingPendingImages(imageDate: String): MutableList<CoroutineWorker> {
         val localPhotos = photoLocalDataSource.getAllPhotosFromDate(imageDate)
-        downloadImagesFromList(localPhotos.first())
+        return downloadImagesFromList(localPhotos.first())
     }
 
     override suspend fun getPhotoById(photoId: String): Photo {
         return photoLocalDataSource.getPhotoById(photoId)
     }
 
-    private suspend fun downloadImagesFromList(photoList: List<Photo>) {
+    private suspend fun downloadImagesFromList(photoList: List<Photo>): MutableList<CoroutineWorker> {
         val imageLoader = ImageLoader(appContext)
-
+        val workerList = mutableListOf<CoroutineWorker>()
         photoList.filter { it.localUri == null }.forEach { photo ->
-            try {
-                val pathSaved = storeInDirectory(imageLoader, photo)
-                photo.localUri = pathSaved
-                photoLocalDataSource.savePathInDatabase(photo)
-            } catch (ex: Exception) {
-                ex.printStackTrace()
+           val worker = CoroutineWorker.execute {
+                try {
+                    val pathSaved = storeInDirectory(imageLoader, photo)
+                    photo.localUri = pathSaved
+                    photoLocalDataSource.savePathInDatabase(photo)
+                } catch (ex: Exception) {
+                    ex.printStackTrace()
+                }
             }
+            workerList.add(worker)
         }
+        return workerList
     }
 
     private suspend fun storeInDirectory(imageLoader: ImageLoader, photo: Photo): String {

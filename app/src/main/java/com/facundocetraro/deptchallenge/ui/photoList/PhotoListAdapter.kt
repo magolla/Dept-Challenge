@@ -33,7 +33,7 @@ class PhotoListAdapter(private val onClickListener: OnClickListener) :
                 photoItemBinding.photoProgress.visibility = View.GONE
             } else {
                 photoItemBinding.photoProgress.visibility = View.VISIBLE
-                photoItemBinding.imageView.load(photo.getPhotoThumbUrl()) {
+                photoItemBinding.imageView.load(R.drawable.circle_icons_download) {
                     error(R.drawable.image_load_failed)
                 }
             }
