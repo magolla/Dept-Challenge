@@ -11,7 +11,8 @@ import com.facundocetraro.deptchallenge.databinding.FragmentPhotoMetadataDialogB
 
 class PhotoMetadataDialogFragment : DialogFragment() {
 
-    private lateinit var binding: FragmentPhotoMetadataDialogBinding
+    private var _binding: FragmentPhotoMetadataDialogBinding? = null
+    private val binding get() = _binding!!
 
     private val args: PhotoMetadataDialogFragmentArgs by navArgs()
 
@@ -20,7 +21,7 @@ class PhotoMetadataDialogFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentPhotoMetadataDialogBinding.inflate(layoutInflater)
+        _binding = FragmentPhotoMetadataDialogBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -31,5 +32,10 @@ class PhotoMetadataDialogFragment : DialogFragment() {
             binding.imageDescription.text = getString(R.string.photo_description, caption)
             binding.imageDate.text = getString(R.string.photo_date, date)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

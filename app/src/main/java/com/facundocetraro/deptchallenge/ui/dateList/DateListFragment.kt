@@ -22,8 +22,8 @@ import kotlinx.coroutines.launch
 class DateListFragment : Fragment() {
 
     private var dateListAdapter: DateListAdapter? = null
-    private lateinit var binding: FragmentDateListBinding
-
+    private var _binding: FragmentDateListBinding? = null
+    private val binding get() = _binding!!
     private val dateListViewModel: DateListViewModel by viewModels()
 
     override fun onCreateView(
@@ -31,7 +31,7 @@ class DateListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentDateListBinding.inflate(layoutInflater)
+        _binding = FragmentDateListBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -116,5 +116,10 @@ class DateListFragment : Fragment() {
         binding.errorContainer.visibility = View.VISIBLE
         binding.errorMessage.text = getString(R.string.empty_elements)
         binding.errorImage.load(R.drawable.empty_element)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

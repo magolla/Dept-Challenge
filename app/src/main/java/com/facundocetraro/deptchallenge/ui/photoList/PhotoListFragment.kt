@@ -23,7 +23,8 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class PhotoListFragment : Fragment() {
 
-    private lateinit var binding: FragmentPhotoListBinding
+    private var _binding: FragmentPhotoListBinding? = null
+    private val binding get() = _binding!!
 
     private val photoListViewModel: PhotoListViewModel by viewModels()
 
@@ -36,7 +37,7 @@ class PhotoListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentPhotoListBinding.inflate(layoutInflater)
+        _binding = FragmentPhotoListBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -116,5 +117,10 @@ class PhotoListFragment : Fragment() {
             binding.loadingIcon.visibility = View.GONE
             binding.progress.visibility = View.VISIBLE
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

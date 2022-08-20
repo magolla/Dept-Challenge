@@ -22,7 +22,7 @@ class PhotoRepositoryImpl @Inject constructor(
 
     override suspend fun fetchPhotosFromDateAndStoreThem(imageDate: String) {
         val photoList = photoRemoteDataSource.fetchImagesFromDate(imageDate)
-        photoList.forEach { it.dateId = imageDate }
+        photoList.map { it.dateId = imageDate }
         photoLocalDataSource.updateAll(photoList)
     }
 
@@ -43,7 +43,7 @@ class PhotoRepositoryImpl @Inject constructor(
         val imageLoader = ImageLoader(appContext)
         val workerList = mutableListOf<CoroutineWorker>()
         photoList.filter { it.localUri == null }.forEach { photo ->
-           val worker = CoroutineWorker.execute {
+            val worker = CoroutineWorker.execute {
                 try {
                     val pathSaved = storeInDirectory(imageLoader, photo)
                     photo.localUri = pathSaved
@@ -64,7 +64,7 @@ class PhotoRepositoryImpl @Inject constructor(
         val drawable = imageLoader.execute(request).drawable
 
         val extStorageDirectory = "${appContext.filesDir}"
-        val bm = drawable!!.toBitmap()
+        val bm = drawable?.toBitmap()
 
         var file = File(extStorageDirectory, photo.dateId)
 
@@ -73,7 +73,7 @@ class PhotoRepositoryImpl @Inject constructor(
         }
         file = File(file.toString(), photo.image + ".jpg")
         val outStream = FileOutputStream(file)
-        bm.compress(Bitmap.CompressFormat.PNG, 100, outStream)
+        bm?.compress(Bitmap.CompressFormat.PNG, 100, outStream)
 
         outStream.flush()
         outStream.close()

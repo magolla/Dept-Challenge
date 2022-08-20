@@ -18,7 +18,8 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class PlayerScreenFragment : Fragment() {
 
-    private lateinit var binding: FragmentPlayerScreenBinding
+    private var _binding: FragmentPlayerScreenBinding? = null
+    private val binding get() = _binding!!
 
     private val playerScreenViewModel: PlayerScreenViewModel by viewModels()
 
@@ -29,7 +30,7 @@ class PlayerScreenFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentPlayerScreenBinding.inflate(layoutInflater)
+        _binding = FragmentPlayerScreenBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -46,5 +47,10 @@ class PlayerScreenFragment : Fragment() {
                 ad.start()
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

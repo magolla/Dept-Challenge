@@ -17,7 +17,8 @@ import java.util.concurrent.TimeUnit
 
 class SplashFragment : Fragment() {
 
-    private lateinit var binding: FragmentSplashBinding
+    private var _binding: FragmentSplashBinding? = null
+    private val binding get() = _binding!!
 
     companion object {
         private const val SPLASH_DURATION: Long = 2
@@ -28,7 +29,7 @@ class SplashFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSplashBinding.inflate(layoutInflater)
+        _binding = FragmentSplashBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -44,5 +45,10 @@ class SplashFragment : Fragment() {
         withContext(Dispatchers.Main) {
             findNavController().navigate(R.id.action_splashFragment_to_dateListFragment)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

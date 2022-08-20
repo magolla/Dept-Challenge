@@ -17,8 +17,9 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class PhotoScreenFragment : Fragment() {
-    private lateinit var binding: FragmentPhotoScreenBinding
 
+    private var _binding: FragmentPhotoScreenBinding? = null
+    private val binding get() = _binding!!
     private val photoScreenViewModel: PhotoScreenViewModel by viewModels()
 
     private val args: PhotoScreenFragmentArgs by navArgs()
@@ -28,7 +29,7 @@ class PhotoScreenFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentPhotoScreenBinding.inflate(layoutInflater)
+        _binding = FragmentPhotoScreenBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -47,5 +48,10 @@ class PhotoScreenFragment : Fragment() {
                 findNavController().navigate(action)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
