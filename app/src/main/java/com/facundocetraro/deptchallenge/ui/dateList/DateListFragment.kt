@@ -7,15 +7,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.facundocetraro.deptchallenge.R
 import com.facundocetraro.deptchallenge.data.model.DateWithPhotos
+import com.facundocetraro.deptchallenge.data.model.DateWithSavedStatus
 import com.facundocetraro.deptchallenge.databinding.FragmentDateListBinding
 import com.facundocetraro.deptchallenge.util.ConnectivityUtil
 import com.facundocetraro.deptchallenge.viewModel.DateListViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -76,7 +79,7 @@ class DateListFragment : Fragment() {
             adapter = dateListAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
-        lifecycle.coroutineScope.launch {
+        lifecycleScope.launchWhenStarted {
             dateListViewModel.getImageDatesFlow().collect { imageDateList ->
                 dateListAdapter?.submitList(imageDateList)
                 binding.progress.visibility = View.GONE
@@ -101,9 +104,9 @@ class DateListFragment : Fragment() {
         }
     }
 
-    private fun showDatePhotos(dateWithPhotos: DateWithPhotos) {
+    private fun showDatePhotos(dateWithPhotos: DateWithSavedStatus) {
         val action =
-            DateListFragmentDirections.actionDateListFragmentToPhotoListFragment(dateWithPhotos.imageDate.date)
+            DateListFragmentDirections.actionDateListFragmentToPhotoListFragment(dateWithPhotos.imageDate)
         findNavController().navigate(action)
     }
 

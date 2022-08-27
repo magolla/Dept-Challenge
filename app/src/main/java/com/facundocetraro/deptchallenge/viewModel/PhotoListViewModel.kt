@@ -23,7 +23,7 @@ class PhotoListViewModel @Inject constructor(private val photoRepository: PhotoR
         viewModelScope.launch {
             try {
                 photoRepository.fetchPhotosFromDateAndStoreThem(imageDate)
-                parallelWorker.addAll(photoRepository.startDownloadingPendingImages(imageDate))
+                photoRepository.startDownloadingPendingImages(imageDate)
             } catch (ex: Exception) {
                 ex.printStackTrace()
             }

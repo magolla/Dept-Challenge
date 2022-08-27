@@ -8,11 +8,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.facundocetraro.deptchallenge.R
-import com.facundocetraro.deptchallenge.data.model.DateWithPhotos
+import com.facundocetraro.deptchallenge.data.model.DateWithSavedStatus
+import com.facundocetraro.deptchallenge.data.model.DownloadState
 import com.facundocetraro.deptchallenge.databinding.DateItemBinding
 
 class DateListAdapter(private val onClickListener: OnClickListener) :
-    ListAdapter<DateWithPhotos, DateListAdapter.DateHolder>(DateWithPhotosDiffCallback) {
+    ListAdapter<DateWithSavedStatus, DateListAdapter.DateHolder>(DateWithSavedStatusDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DateHolder {
         return DateHolder(
@@ -26,33 +27,26 @@ class DateListAdapter(private val onClickListener: OnClickListener) :
 
     class DateHolder(private val dateItemBinding: DateItemBinding) :
         RecyclerView.ViewHolder(dateItemBinding.root) {
-        fun bind(dateWithPhotos: DateWithPhotos) {
-            dateItemBinding.textView.text = dateWithPhotos.imageDate.date
-            val savedImagesCount = dateWithPhotos.photoLists.count { it.localUri != null }
+        fun bind(dateWithSavedStatus: DateWithSavedStatus) {
+            dateItemBinding.textView.text = dateWithSavedStatus.imageDate
 
-            val photosCount = dateWithPhotos.photoLists.size
-            if (photosCount == 0) {
-                dateItemBinding.downloadStatus.visibility = View.VISIBLE
-                dateItemBinding.progress.visibility = View.GONE
-                dateItemBinding.downloadStatus.load(R.drawable.ic_baseline_radio_button_unchecked_24)
-            } else {
-                when (savedImagesCount) {
-                    photosCount -> {
-                        dateItemBinding.downloadStatus.visibility = View.VISIBLE
-                        dateItemBinding.progress.visibility = View.GONE
-                        dateItemBinding.downloadStatus.load(R.drawable.ic_baseline_check_24)
-                    }
-                    0 -> {
-                        dateItemBinding.downloadStatus.visibility = View.VISIBLE
-                        dateItemBinding.progress.visibility = View.GONE
-                        dateItemBinding.downloadStatus.load(R.drawable.ic_baseline_radio_button_unchecked_24)
-                    }
-                    else -> {
-                        dateItemBinding.downloadStatus.visibility = View.GONE
-                        dateItemBinding.progress.visibility = View.VISIBLE
-                    }
+            when (dateWithSavedStatus.photoLists) {
+                DownloadState.DOWNLOADED -> {
+                    dateItemBinding.downloadStatus.visibility = View.VISIBLE
+                    dateItemBinding.progress.visibility = View.GONE
+                    dateItemBinding.downloadStatus.load(R.drawable.ic_baseline_check_24)
+                }
+                DownloadState.NOT_STARTED -> {
+                    dateItemBinding.downloadStatus.visibility = View.VISIBLE
+                    dateItemBinding.progress.visibility = View.GONE
+                    dateItemBinding.downloadStatus.load(R.drawable.ic_baseline_radio_button_unchecked_24)
+                }
+                else -> {
+                    dateItemBinding.downloadStatus.visibility = View.GONE
+                    dateItemBinding.progress.visibility = View.VISIBLE
                 }
             }
+
         }
     }
 
@@ -64,17 +58,23 @@ class DateListAdapter(private val onClickListener: OnClickListener) :
         }
     }
 
-    class OnClickListener(val clickListener: (DateWithPhotos: DateWithPhotos) -> Unit) {
-        fun onClick(DateWithPhotos: DateWithPhotos) = clickListener(DateWithPhotos)
+    class OnClickListener(val clickListener: (DateWithSavedStatus: DateWithSavedStatus) -> Unit) {
+        fun onClick(DateWithSavedStatus: DateWithSavedStatus) = clickListener(DateWithSavedStatus)
     }
 }
 
-object DateWithPhotosDiffCallback : DiffUtil.ItemCallback<DateWithPhotos>() {
-    override fun areItemsTheSame(oldItem: DateWithPhotos, newItem: DateWithPhotos): Boolean {
+object DateWithSavedStatusDiffCallback : DiffUtil.ItemCallback<DateWithSavedStatus>() {
+    override fun areItemsTheSame(
+        oldItem: DateWithSavedStatus,
+        newItem: DateWithSavedStatus
+    ): Boolean {
         return oldItem == newItem
     }
 
-    override fun areContentsTheSame(oldItem: DateWithPhotos, newItem: DateWithPhotos): Boolean {
-        return oldItem.imageDate.date == newItem.imageDate.date
+    override fun areContentsTheSame(
+        oldItem: DateWithSavedStatus,
+        newItem: DateWithSavedStatus
+    ): Boolean {
+        return oldItem.imageDate == newItem.imageDate
     }
 }

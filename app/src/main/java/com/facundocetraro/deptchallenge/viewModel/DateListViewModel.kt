@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.facundocetraro.deptchallenge.data.model.DateWithPhotos
+import com.facundocetraro.deptchallenge.data.model.DateWithSavedStatus
 import com.facundocetraro.deptchallenge.data.source.imageDate.ImageDateRepository
 import com.facundocetraro.deptchallenge.util.ConnectivityUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +25,7 @@ class DateListViewModel @Inject constructor(
     private val _downloadStatus: MutableLiveData<DownloadStatus> = MutableLiveData()
     val downloadStatus: LiveData<DownloadStatus> = _downloadStatus
 
-    fun getImageDatesFlow(): Flow<List<DateWithPhotos>> = imageDateRepository.getAllImageDates()
+    fun getImageDatesFlow(): Flow<List<DateWithSavedStatus>> = imageDateRepository.getAllImageDates()
 
     fun fetchDateList() {
         viewModelScope.launch {

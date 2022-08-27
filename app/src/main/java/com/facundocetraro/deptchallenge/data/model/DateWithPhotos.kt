@@ -10,4 +10,20 @@ data class DateWithPhotos(
         entityColumn = "dateId"
     )
     val photoLists: List<Photo>
-)
+) {
+    fun calculateDownloadStatus(): DownloadState {
+        val downloadedPhotos = photoLists.count { it.localUri != null }
+
+        return when (downloadedPhotos) {
+            0 -> {
+                DownloadState.NOT_STARTED
+            }
+            photoLists.size -> {
+                DownloadState.DOWNLOADED
+            }
+            else -> {
+                DownloadState.DOWNLOADING
+            }
+        }
+    }
+}

@@ -1,5 +1,6 @@
 package com.facundocetraro.deptchallenge.di.module
 
+import androidx.work.WorkManager
 import com.facundocetraro.deptchallenge.data.source.imageDate.ImageDateLocalDataSource
 import com.facundocetraro.deptchallenge.data.source.imageDate.ImageDateRemoteDataSource
 import com.facundocetraro.deptchallenge.data.source.imageDate.ImageDateRepository
@@ -30,7 +31,8 @@ class ImageDateModule {
     @Provides
     fun provideImageDateRepository(
         imageDateRemoteDataSource: ImageDateRemoteDataSource,
-        localDataSource: ImageDateLocalDataSource
+        localDataSource: ImageDateLocalDataSource,
+        workManager: WorkManager
     ): ImageDateRepository =
-        ImageDateRepositoryImpl(imageDateRemoteDataSource, localDataSource)
+        ImageDateRepositoryImpl(imageDateRemoteDataSource, localDataSource, workManager)
 }
