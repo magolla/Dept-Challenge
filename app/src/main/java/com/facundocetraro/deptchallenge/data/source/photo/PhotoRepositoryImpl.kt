@@ -4,7 +4,9 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.facundocetraro.deptchallenge.data.model.Photo
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class PhotoRepositoryImpl @Inject constructor(
@@ -15,9 +17,11 @@ class PhotoRepositoryImpl @Inject constructor(
     PhotoRepository {
 
     override suspend fun fetchPhotosFromDateAndStoreThem(imageDate: String) {
-        val photoList = photoRemoteDataSource.fetchImagesFromDate(imageDate)
-        photoList.map { it.dateId = imageDate }
-        photoLocalDataSource.updateAll(photoList)
+        withContext(Dispatchers.IO){
+            val photoList = photoRemoteDataSource.fetchImagesFromDate(imageDate)
+            photoList.map { it.dateId = imageDate }
+            photoLocalDataSource.updateAll(photoList)
+        }
     }
 
     override fun getAllPhotosFromDate(photoDate: String): Flow<List<Photo>> {
@@ -31,8 +35,8 @@ class PhotoRepositoryImpl @Inject constructor(
         workManager.enqueue(workRequest)
     }
 
-    override suspend fun getPhotoById(photoId: String): Photo {
-        return photoLocalDataSource.getPhotoById(photoId)
+    override suspend fun getPhotoById(photoId: String): Photo = withContext(Dispatchers.IO) {
+        return@withContext photoLocalDataSource.getPhotoById(photoId)
     }
 
     override suspend fun savePathInDatabase(photo: Photo) {

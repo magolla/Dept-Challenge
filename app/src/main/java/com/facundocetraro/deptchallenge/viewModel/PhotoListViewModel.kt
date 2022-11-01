@@ -6,8 +6,10 @@ import com.autodesk.coroutineworker.CoroutineWorker
 import com.facundocetraro.deptchallenge.data.model.Photo
 import com.facundocetraro.deptchallenge.data.source.photo.PhotoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,12 +23,12 @@ class PhotoListViewModel @Inject constructor(private val photoRepository: PhotoR
 
     fun fetchImagesFromDate(imageDate: String) {
         viewModelScope.launch {
-            try {
-                photoRepository.fetchPhotosFromDateAndStoreThem(imageDate)
-                photoRepository.startDownloadingPendingImages(imageDate)
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-            }
+                try {
+                    photoRepository.fetchPhotosFromDateAndStoreThem(imageDate)
+                    photoRepository.startDownloadingPendingImages(imageDate)
+                } catch (ex: Exception) {
+                    ex.printStackTrace()
+                }
         }
     }
 

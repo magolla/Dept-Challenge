@@ -7,9 +7,11 @@ import com.facundocetraro.deptchallenge.data.model.DateWithSavedStatus
 import com.facundocetraro.deptchallenge.data.model.DownloadState
 import com.facundocetraro.deptchallenge.data.model.ImageDate
 import com.facundocetraro.deptchallenge.data.source.photo.PhotoDownloadAndStoreWorker
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ImageDateRepositoryImpl @Inject constructor(
@@ -18,10 +20,10 @@ class ImageDateRepositoryImpl @Inject constructor(
     private val workManager: WorkManager
 ) :
     ImageDateRepository {
-    override suspend fun fetchImageDate(): List<ImageDate> {
+    override suspend fun fetchImageDate() = withContext(Dispatchers.IO) {
         val imageDate = imageDateRemoteDataSource.getAllImageDates()
         imageDateLocalDataSource.updateAll(imageDate)
-        return imageDate
+        imageDate
     }
 
     override fun getAllImageDates(): Flow<List<DateWithSavedStatus>> {

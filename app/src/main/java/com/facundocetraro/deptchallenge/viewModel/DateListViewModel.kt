@@ -11,8 +11,10 @@ import com.facundocetraro.deptchallenge.data.source.imageDate.ImageDateRepositor
 import com.facundocetraro.deptchallenge.util.ConnectivityUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,9 +38,12 @@ class DateListViewModel @Inject constructor(
             } catch (ex: Exception) {
                 ex.printStackTrace()
                 if (ConnectivityUtil.hasInternetConnection(context)) {
-                    _downloadStatus.value = DownloadStatus.GENERIC_ERROR
+                    withContext(Dispatchers.Main) {
+                        _downloadStatus.value = DownloadStatus.GENERIC_ERROR
+                    }
                 }
             }
+
         }
     }
 
